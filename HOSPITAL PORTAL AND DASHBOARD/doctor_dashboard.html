@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard | Emma-Health Center</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+        <div class="container dashboard-nav">
+            <div class="logo">
+                <i class="fas fa-hospital logo-icon"></i>
+                <div class="logo-text">EMMA<span>-HEALTH</span> <span style="font-size: 16px; font-weight: 400;">| Doctor Portal</span></div>
+            </div>
+            
+            <div class="user-menu">
+                <div class="user-info">
+                    <div class="user-name" id="doctorName">Dr. Michael Chen</div>
+                    <div class="user-role" id="doctorDept">Cardiology Department</div>
+                </div>
+                <div class="user-avatar">MC</div>
+                <div class="notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">5</span>
+                </div>
+                <button class="btn btn-outline" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="doctor-profile">
+                <div class="doctor-avatar">MC</div>
+                <div class="doctor-info">
+                    <h4 id="sidebarDoctorName">Dr. Michael Chen</h4>
+                    <p class="doctor-specialty">Cardiologist</p>
+                    <p class="doctor-license">License: CA-123456</p>
+                </div>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li><a href="#dashboard" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#appointments"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+                <li><a href="#patients"><i class="fas fa-user-injured"></i> My Patients</a></li>
+                <li><a href="#medicalRecords"><i class="fas fa-file-medical"></i> Medical Records</a></li>
+                <li><a href="#prescriptions"><i class="fas fa-prescription"></i> Prescriptions</a></li>
+                <li><a href="#labResults"><i class="fas fa-flask"></i> Lab Results</a></li>
+                <li><a href="#telemedicine"><i class="fas fa-video"></i> Telemedicine</a></li>
+                <li><a href="#schedule"><i class="fas fa-clock"></i> Schedule</a></li>
+                <li><a href="#reports"><i class="fas fa-chart-bar"></i> Reports</a></li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <div class="doctor-stats">
+                    <div class="stat-item">
+                        <span>Today's Patients</span>
+                        <strong>8</strong>
+                    </div>
+                    <div class="stat-item">
+                        <span>Pending Rx</span>
+                        <strong>3</strong>
+                    </div>
+                    <div class="stat-item">
+                        <span>Messages</span>
+                        <strong>5</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Dashboard Section -->
+            <div class="dashboard-section active" id="dashboard">
+                <div class="dashboard-card">
+                    <div class="dashboard-header">
+                        <h3>Today's Schedule</h3>
+                        <div class="dashboard-actions">
+                            <button class="btn btn-outline" onclick="viewFullSchedule()">
+                                <i class="fas fa-calendar-alt"></i> Full Schedule
+                            </button>
+                            <button class="btn btn-primary" onclick="addAppointment()">
+                                <i class="fas fa-plus"></i> Add Appointment
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-timeline">
+                        <!-- Schedule items will be loaded here -->
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3>Urgent Patients</h3>
+                        <div class="urgent-patients" id="urgentPatients">
+                            <!-- Urgent patients will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h3>Quick Actions</h3>
+                        <div class="quick-actions-grid">
+                            <button class="quick-action" onclick="writePrescription()">
+                                <i class="fas fa-prescription"></i>
+                                <span>Write Prescription</span>
+                            </button>
+                            <button class="quick-action" onclick="orderLabTest()">
+                                <i class="fas fa-flask"></i>
+                                <span>Order Lab Test</span>
+                            </button>
+                            <button class="quick-action" onclick="addMedicalNote()">
+                                <i class="fas fa-notes-medical"></i>
+                                <span>Add Medical Note</span>
+                            </button>
+                            <button class="quick-action" onclick="startTeleconsult()">
+                                <i class="fas fa-video"></i>
+                                <span>Start Teleconsult</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Recent Patient Updates</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Last Visit</th>
+                                <th>Condition</th>
+                                <th>Next Appointment</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="patientUpdates">
+                            <!-- Patient updates will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Appointments Section -->
+            <div class="dashboard-section" id="appointments">
+                <div class="dashboard-card">
+                    <div class="dashboard-header">
+                        <h3>Appointment Management</h3>
+                        <div class="appointment-filters">
+                            <select id="appointmentFilter" class="filter-select">
+                                <option value="today">Today</option>
+                                <option value="week">This Week</option>
+                                <option value="month">This Month</option>
+                                <option value="all">All Appointments</option>
+                            </select>
+                            <input type="text" id="searchPatient" placeholder="Search patient..." class="search-input">
+                        </div>
+                    </div>
+                    
+                    <div class="calendar-view" id="appointmentCalendar">
+                        <!-- Calendar will be loaded here -->
+                    </div>
+                    
+                    <div class="appointments-list" id="appointmentsList">
+                        <!-- Appointments will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medical Records Section -->
+            <div class="dashboard-section" id="medicalRecords">
+                <div class="dashboard-card">
+                    <h3>Medical Records</h3>
+                    <p class="section-subtitle">Powered by Jealth AI Integration</p>
+                    
+                    <div class="export-options">
+                        <button class="export-btn" onclick="exportMedicalRecord('pdf')">
+                            <i class="fas fa-file-pdf"></i> Export PDF
+                        </button>
+                        <button class="export-btn" onclick="exportMedicalRecord('word')">
+                            <i class="fas fa-file-word"></i> Export Word
+                        </button>
+                        <button class="export-btn" onclick="openJealthAI()">
+                            <i class="fas fa-robot"></i> Jealth AI Analysis
+                        </button>
+                    </div>
+                    
+                    <div class="medical-records-search">
+                        <input type="text" id="recordSearch" placeholder="Search patient name or ID..." class="search-input">
+                        <button class="btn btn-primary" onclick="searchMedicalRecords()">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Patient ID</th>
+                                <th>Patient Name</th>
+                                <th>Last Visit</th>
+                                <th>Diagnosis</th>
+                                <th>Treatment</th>
+                                <th>AI Insights</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="medicalRecordsTable">
+                            <!-- Medical records will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prescription Modal -->
+    <div class="modal" id="prescriptionModal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h2>New Prescription</h2>
+                <button class="close-modal" onclick="closePrescriptionModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="prescriptionForm">
+                    <div class="form-group">
+                        <label>Select Patient *</label>
+                        <select id="prescriptionPatient" class="form-control" required>
+                            <option value="">Choose patient...</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Medication Name *</label>
+                            <input type="text" id="medicationName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Dosage *</label>
+                            <input type="text" id="medicationDosage" class="form-control" placeholder="e.g., 500mg" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Frequency *</label>
+                            <select id="medicationFrequency" class="form-control" required>
+                                <option value="">Select frequency</option>
+                                <option value="Once daily">Once daily</option>
+                                <option value="Twice daily">Twice daily</option>
+                                <option value="Three times daily">Three times daily</option>
+                                <option value="Four times daily">Four times daily</option>
+                                <option value="As needed">As needed</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Duration</label>
+                            <input type="text" id="medicationDuration" class="form-control" placeholder="e.g., 7 days">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Instructions</label>
+                        <textarea id="medicationInstructions" class="form-control" rows="3" placeholder="Special instructions..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Refills Allowed</label>
+                        <select id="refillsAllowed" class="form-control">
+                            <option value="0">No refills</option>
+                            <option value="1">1 refill</option>
+                            <option value="2">2 refills</option>
+                            <option value="3">3 refills</option>
+                            <option value="unlimited">Unlimited refills</option>
+                        </select>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline" onclick="closePrescriptionModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Send to Pharmacy</button>
+                        <button type="button" class="btn btn-secondary" onclick="printPrescription()">
+                            <i class="fas fa-print"></i> Print
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="js/doctor.js"></script>
+    <script>
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load doctor info
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (currentUser && currentUser.role === 'doctor') {
+                document.getElementById('doctorName').textContent = currentUser.name;
+                document.getElementById('sidebarDoctorName').textContent = currentUser.name;
+                document.getElementById('doctorDept').textContent = currentUser.department + ' Department';
+            } else {
+                window.location.href = 'doctor_login.html';
+            }
+            
+            // Load initial data
+            loadTodaySchedule();
+            loadUrgentPatients();
+            loadPatientUpdates();
+            loadMedicalRecords();
+            loadAppointments();
+            
+            // Sidebar navigation
+            document.querySelectorAll('.sidebar-menu a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    document.querySelectorAll('.sidebar-menu a').forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Hide all sections
+                    document.querySelectorAll('.dashboard-section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    // Show target section
+                    const targetId = this.getAttribute('href').substring(1);
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+            
+            // Logout button
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to logout?')) {
+                    localStorage.removeItem('currentUser');
+                    window.location.href = 'index.html';
+                }
+            });
+            
+            // Prescription form
+            document.getElementById('prescriptionForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitPrescription();
+            });
+        });
+        
+        function loadTodaySchedule() {
+            const schedule = [
+                { time: '9:00 AM', patient: 'James Wilson', type: 'Follow-up', status: 'confirmed' },
+                { time: '10:30 AM', patient: 'Maria Garcia', type: 'New Patient', status: 'confirmed' },
+                { time: '11:45 AM', patient: 'Robert Smith', type: 'Procedure', status: 'confirmed' },
+                { time: '2:00 PM', patient: 'Jennifer Lee', type: 'Consultation', status: 'pending' },
+                { time: '3:30 PM', patient: 'Thomas Brown', type: 'Follow-up', status: 'confirmed' }
+            ];
+            
+            const container = document.querySelector('.schedule-timeline');
+            container.innerHTML = schedule.map(appointment => `
+                <div class="schedule-item">
+                    <div class="schedule-time">${appointment.time}</div>
+                    <div class="schedule-details">
+                        <div class="patient-name">${appointment.patient}</div>
+                        <div class="appointment-type">${appointment.type}</div>
+                    </div>
+                    <div class="schedule-status status-${appointment.status}">
+                        ${appointment.status}
+                    </div>
+                    <button class="btn-icon" onclick="viewAppointmentDetails('${appointment.patient}')">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+        
+        function loadUrgentPatients() {
+            const patients = [
+                { name: 'David Miller', condition: 'Hypertension Crisis', priority: 'high', lastBP: '180/110' },
+                { name: 'Sarah Johnson', condition: 'Chest Pain', priority: 'high', lastBP: '140/90' },
+                { name: 'Michael Chen', condition: 'Post-op Follow-up', priority: 'medium', lastBP: '120/80' }
+            ];
+            
+            const container = document.getElementById('urgentPatients');
+            container.innerHTML = patients.map(patient => `
+                <div class="urgent-patient">
+                    <div class="patient-header">
+                        <div class="patient-name">${patient.name}</div>
+                        <div class="priority-badge priority-${patient.priority}">${patient.priority}</div>
+                    </div>
+                    <div class="patient-condition">${patient.condition}</div>
+                    <div class="patient-vitals">
+                        <span>BP: ${patient.lastBP}</span>
+                        <span>HR: --</span>
+                        <span>Temp: --</span>
+                    </div>
+                    <button class="btn btn-outline" onclick="viewPatient('${patient.name}')">
+                        <i class="fas fa-stethoscope"></i> Examine
+                    </button>
+                </div>
+            `).join('');
+        }
+        
+        function loadPatientUpdates() {
+            const updates = [
+                { patient: 'James Wilson', lastVisit: '2023-10-25', condition: 'Hypertension', nextAppt: '2023-11-08', status: 'stable' },
+                { patient: 'Maria Garcia', lastVisit: '2023-10-24', condition: 'Diabetes Type 2', nextAppt: '2023-11-15', status: 'improving' },
+                { patient: 'Robert Smith', lastVisit: '2023-10-23', condition: 'Arrhythmia', nextAppt: '2023-11-01', status: 'monitoring' },
+                { patient: 'Jennifer Lee', lastVisit: '2023-10-22', condition: 'Asthma', nextAppt: '2023-11-05', status: 'stable' }
+            ];
+            
+            const container = document.getElementById('patientUpdates');
+            container.innerHTML = updates.map(patient => `
+                <tr>
+                    <td>${patient.patient}</td>
+                    <td>${patient.lastVisit}</td>
+                    <td>${patient.condition}</td>
+                    <td>${patient.nextAppt}</td>
+                    <td><span class="status-badge status-${patient.status}">${patient.status}</span></td>
+                    <td>
+                        <button class="btn-icon" title="View Record"><i class="fas fa-file-medical"></i></button>
+                        <button class="btn-icon" title="Message"><i class="fas fa-envelope"></i></button>
+                        <button class="btn-icon" title="Add Note"><i class="fas fa-edit"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        function loadMedicalRecords() {
+            const records = [
+                { id: 'P00123', name: 'James Wilson', lastVisit: '2023-10-25', diagnosis: 'Essential Hypertension', treatment: 'Lisinopril 10mg', aiInsights: 'Stable, monitor monthly' },
+                { id: 'P00124', name: 'Maria Garcia', lastVisit: '2023-10-24', diagnosis: 'Type 2 Diabetes', treatment: 'Metformin 850mg', aiInsights: 'A1C improving, continue regimen' },
+                { id: 'P00125', name: 'Robert Smith', lastVisit: '2023-10-23', diagnosis: 'Atrial Fibrillation', treatment: 'Warfarin 5mg', aiInsights: 'INR within range, stable' }
+            ];
+            
+            const container = document.getElementById('medicalRecordsTable');
+            container.innerHTML = records.map(record => `
+                <tr>
+                    <td>${record.id}</td>
+                    <td>${record.name}</td>
+                    <td>${record.lastVisit}</td>
+                    <td>${record.diagnosis}</td>
+                    <td>${record.treatment}</td>
+                    <td>
+                        <span class="ai-insight">${record.aiInsights}</span>
+                    </td>
+                    <td>
+                        <button class="btn-icon" onclick="viewMedicalRecord('${record.id}')" title="View Full Record">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn-icon" onclick="editMedicalRecord('${record.id}')" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-icon" onclick="exportPatientRecord('${record.id}')" title="Export">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        function loadAppointments() {
+            // Load appointments for the calendar view
+            // This would typically come from an API
+        }
+        
+        function writePrescription() {
+            document.getElementById('prescriptionModal').classList.add('active');
+        }
+        
+        function closePrescriptionModal() {
+            document.getElementById('prescriptionModal').classList.remove('active');
+            document.getElementById('prescriptionForm').reset();
+        }
+        
+        function submitPrescription() {
+            alert('Prescription sent to pharmacy successfully!');
+            closePrescriptionModal();
+        }
+        
+        function printPrescription() {
+            alert('Prescription printed successfully!');
+        }
+        
+        function orderLabTest() {
+            alert('Lab test ordered successfully!');
+        }
+        
+        function addMedicalNote() {
+            alert('Opening medical note editor...');
+        }
+        
+        function startTeleconsult() {
+            alert('Starting teleconsultation session...');
+        }
+        
+        function viewFullSchedule() {
+            alert('Opening full schedule view...');
+        }
+        
+        function addAppointment() {
+            alert('Opening appointment scheduler...');
+        }
+        
+        function exportMedicalRecord(format) {
+            alert(`Medical record exported as ${format.toUpperCase()} with password protection.`);
+        }
+        
+        function openJealthAI() {
+            alert('Opening Jealth AI analysis dashboard...');
+        }
+        
+        function viewPatient(name) {
+            alert(`Viewing patient: ${name}`);
+        }
+        
+        function viewAppointmentDetails(patient) {
+            alert(`Viewing appointment details for: ${patient}`);
+        }
+        
+        function viewMedicalRecord(id) {
+            alert(`Opening medical record: ${id}`);
+        }
+        
+        function editMedicalRecord(id) {
+            alert(`Editing medical record: ${id}`);
+        }
+        
+        function exportPatientRecord(id) {
+            alert(`Exporting patient record: ${id} with password protection.`);
+        }
+    </script>
+    
+    <style>
+        .doctor-profile {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .doctor-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            font-size: 32px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+        }
+        
+        .doctor-specialty {
+            color: var(--primary);
+            font-weight: 500;
+            margin: 5px 0;
+        }
+        
+        .doctor-license {
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .doctor-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 15px;
+            background-color: var(--light);
+            border-radius: var(--radius);
+            margin-top: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-item span {
+            display: block;
+            font-size: 12px;
+            color: var(--gray);
+        }
+        
+        .stat-item strong {
+            display: block;
+            font-size: 20px;
+            color: var(--primary);
+            margin-top: 5px;
+        }
+        
+        .schedule-timeline {
+            margin-top: 20px;
+        }
+        
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid var(--light-gray);
+            transition: var(--transition);
+        }
+        
+        .schedule-item:hover {
+            background-color: var(--light);
+        }
+        
+        .schedule-time {
+            min-width: 80px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .schedule-details {
+            flex: 1;
+        }
+        
+        .patient-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .appointment-type {
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .schedule-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 15px;
+        }
+        
+        .status-confirmed {
+            background-color: rgba(52, 168, 83, 0.1);
+            color: var(--secondary);
+        }
+        
+        .status-pending {
+            background-color: rgba(251, 188, 5, 0.1);
+            color: var(--accent);
+        }
+        
+        .urgent-patients {
+            margin-top: 15px;
+        }
+        
+        .urgent-patient {
+            background-color: rgba(234, 67, 53, 0.05);
+            border: 1px solid rgba(234, 67, 53, 0.2);
+            border-radius: var(--radius);
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .patient-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .priority-badge {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .priority-high {
+            background-color: rgba(234, 67, 53, 0.2);
+            color: var(--danger);
+        }
+        
+        .priority-medium {
+            background-color: rgba(251, 188, 5, 0.2);
+            color: var(--accent);
+        }
+        
+        .patient-condition {
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .patient-vitals {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .quick-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .quick-action {
+            background-color: var(--light);
+            border: 1px solid var(--light-gray);
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .quick-action:hover {
+            background-color: rgba(26, 115, 232, 0.1);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .quick-action i {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .section-subtitle {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        .medical-records-search {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .ai-insight {
+            background-color: rgba(52, 168, 83, 0.1);
+            color: var(--secondary);
+            padding: 5px 10px;
+            border-radius: var(--radius);
+            font-size: 14px;
+        }
+        
+        .appointment-filters {
+            display: flex;
+            gap: 15px;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nurse Login | Emma-Health Center</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-header">
+            <a href="index.html" class="logo">
+                <i class="fas fa-hospital logo-icon"></i>
+                <div class="logo-text">EMMA<span>-HEALTH</span></div>
+            </a>
+            <h1>Nursing Staff Login</h1>
+            <p>Access patient care and nursing management system</p>
+        </div>
+
+        <div class="auth-card">
+            <div class="nurse-verification">
+                <i class="fas fa-user-nurse"></i>
+                <span>Nursing Staff Access Only</span>
+            </div>
+
+            <form id="nurseLoginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="nurseID">Nurse ID</label>
+                    <input type="text" id="nurseID" placeholder="Enter your nurse ID" required>
+                    <small>Format: NUR-XXXX (e.g., NUR-1234)</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="nursePassword">Password</label>
+                    <div class="password-input">
+                        <input type="password" id="nursePassword" placeholder="Enter your password" required>
+                        <button type="button" class="toggle-password">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="nurseShift">Current Shift</label>
+                    <select id="nurseShift" class="form-control" required>
+                        <option value="">Select shift</option>
+                        <option value="morning">Morning (7 AM - 3 PM)</option>
+                        <option value="evening">Evening (3 PM - 11 PM)</option>
+                        <option value="night">Night (11 PM - 7 AM)</option>
+                    </select>
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox">
+                        <input type="checkbox" checked>
+                        <span>Clock me in for shift</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-user-nurse"></i> Access Nursing Portal
+                </button>
+
+                <div class="auth-divider">
+                    <span>Quick Access</span>
+                </div>
+
+                <div class="quick-actions">
+                    <a href="medication_dispense.html" class="btn-medication">
+                        <i class="fas fa-pills"></i> Medication Dispense
+                    </a>
+                    <a href="vital_signs.html" class="btn-vitals">
+                        <i class="fas fa-heartbeat"></i> Vital Signs Entry
+                    </a>
+                </div>
+            </form>
+
+            <div class="auth-footer">
+                <p>New nursing staff? <a href="nurse_register.html">Register Credentials</a></p>
+                <p>Need assistance? <a href="contact.html">Contact Nursing Supervisor</a></p>
+            </div>
+        </div>
+
+        <div class="security-notice">
+            <i class="fas fa-clipboard-check"></i>
+            <p>All patient care activities are documented and monitored for quality assurance.</p>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script>
+        document.getElementById('nurseLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nurseId = document.getElementById('nurseID').value;
+            const password = document.getElementById('nursePassword').value;
+            const shift = document.getElementById('nurseShift').value;
+            
+            if (!nurseId || !password || !shift) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // Validate nurse ID format
+            const idPattern = /^NUR-\d{4}$/;
+            if (!idPattern.test(nurseId)) {
+                alert('Please enter a valid nurse ID (e.g., NUR-1234)');
+                return;
+            }
+            
+            // Simulate nurse login
+            const nurses = [
+                { id: 'NUR-1001', name: 'Nurse Patricia Brown', department: 'Emergency' },
+                { id: 'NUR-1002', name: 'Nurse Emily Wilson', department: 'Pediatrics' },
+                { id: 'NUR-1003', name: 'Nurse Sarah Miller', department: 'Cardiology' }
+            ];
+            
+            const nurse = nurses.find(n => n.id === nurseId);
+            
+            if (nurse) {
+                localStorage.setItem('currentUser', JSON.stringify({
+                    role: 'nurse',
+                    name: nurse.name,
+                    id: nurseId,
+                    department: nurse.department,
+                    shift: shift
+                }));
+                
+                window.location.href = 'nurse_dashboard.html';
+            } else {
+                alert('Invalid nurse ID or password');
+            }
+        });
+        
+        // Toggle password visibility
+        document.querySelectorAll('.toggle-password').forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.parentElement.querySelector('input');
+                const icon = this.querySelector('i');
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.className = 'fas fa-eye-slash';
+                } else {
+                    input.type = 'password';
+                    icon.className = 'fas fa-eye';
+                }
+            });
+        });
+    </script>
+    
+    <style>
+        .nurse-verification {
+            background-color: rgba(251, 188, 5, 0.1);
+            border-radius: var(--radius);
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .nurse-verification i {
+            font-size: 24px;
+            color: var(--accent);
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .btn-medication, .btn-vitals {
+            padding: 12px;
+            border-radius: var(--radius);
+            text-decoration: none;
+            text-align: center;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .btn-medication {
+            background-color: rgba(26, 115, 232, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(26, 115, 232, 0.3);
+        }
+        
+        .btn-medication:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-vitals {
+            background-color: rgba(52, 168, 83, 0.1);
+            color: var(--secondary);
+            border: 1px solid rgba(52, 168, 83, 0.3);
+        }
+        
+        .btn-vitals:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+    </style>
+</body>
+</html>

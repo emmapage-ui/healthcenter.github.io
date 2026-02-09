@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emma-Health Center | Professional Healthcare</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-hospital logo-icon"></i>
+                <div class="logo-text">EMMA<span>-HEALTH</span></div>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#facilities">Facilities</a></li>
+                <li><a href="#departments">Departments</a></li>
+                <li><a href="#staff">Medical Staff</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="auth-dropdown">
+                    <a href="#">Login <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="patient_login.html">Patient Login</a>
+                        <a href="doctor_login.html">Doctor Login</a>
+                        <a href="nurse_login.html">Nurse Login</a>
+                        <a href="pharmacist_login.html">Pharmacist Login</a>
+                        <a href="admin_login.html">Admin Login</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Welcome to Emma-Health Center</h1>
+            <p>Providing exceptional healthcare services with cutting-edge technology and compassionate care. Your health is our priority.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" id="learnMoreBtn">Learn More</button>
+                <a href="book_appointment.html" class="btn btn-secondary">Book Appointment</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Welcome to Emma-Health Center</h2>
+                <p>A message from our Medical Director</p>
+            </div>
+            
+            <div class="welcome-container">
+                <div class="welcome-img">
+                    <img src="Doctor Emma.jpg" alt="Medical Director">
+                </div>
+                <div class="welcome-content">
+                    <h2>A Message from Our Medical Director</h2>
+                    <p>Welcome to Emma-Health Center, where we combine state-of-the-art medical technology with compassionate care. Our mission is to provide exceptional healthcare services to our community, focusing on prevention, accurate diagnosis, and effective treatment.</p>
+                    <p>At Emma-Health Center, we believe in a patient-centered approach. Our team of dedicated professionals works collaboratively to ensure that each patient receives personalized care tailored to their unique needs.</p>
+                    <p>We are proud to integrate Jealth AI into our medical records system, enhancing diagnostic accuracy and treatment planning. This technology allows us to provide more precise and efficient care while maintaining the highest standards of patient privacy and data security.</p>
+                    <p class="director-name">Dr. Ayoola Emmanuel, Medical Director</p>
+                    <div class="security-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>HIPAA Compliant & Secure Data Protection</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Departments Section -->
+    <section class="section" id="departments">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Medical Departments</h2>
+                <p>Specialized care units with expert medical professionals</p>
+            </div>
+            
+            <div class="departments-container">
+                <!-- Cardiology Department -->
+                <div class="department-card" onclick="openDepartmentModal('cardiology')">
+                    <div class="department-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Cardiology</h3>
+                    <p>Comprehensive heart care and cardiovascular treatments</p>
+                    <div class="department-stats">
+                        <span><i class="fas fa-user-md"></i> 8 Specialists</span>
+                        <span><i class="fas fa-procedures"></i> 24 Beds</span>
+                    </div>
+                </div>
+
+                <!-- Neurology Department -->
+                <div class="department-card" onclick="openDepartmentModal('neurology')">
+                    <div class="department-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Neurology</h3>
+                    <p>Brain and nervous system disorder treatments</p>
+                    <div class="department-stats">
+                        <span><i class="fas fa-user-md"></i> 6 Specialists</span>
+                        <span><i class="fas fa-procedures"></i> 18 Beds</span>
+                    </div>
+                </div>
+
+                <!-- Pediatrics Department -->
+                <div class="department-card" onclick="openDepartmentModal('pediatrics')">
+                    <div class="department-icon">
+                        <i class="fas fa-baby"></i>
+                    </div>
+                    <h3>Pediatrics</h3>
+                    <p>Child healthcare from infancy to adolescence</p>
+                    <div class="department-stats">
+                        <span><i class="fas fa-user-md"></i> 7 Specialists</span>
+                        <span><i class="fas fa-procedures"></i> 22 Beds</span>
+                    </div>
+                </div>
+
+                <!-- Emergency Department -->
+                <div class="department-card" onclick="openDepartmentModal('emergency')">
+                    <div class="department-icon">
+                        <i class="fas fa-ambulance"></i>
+                    </div>
+                    <h3>Emergency</h3>
+                    <p>24/7 emergency medical services</p>
+                    <div class="department-stats">
+                        <span><i class="fas fa-user-md"></i> 12 Specialists</span>
+                        <span><i class="fas fa-procedures"></i> 30 Beds</span>
+                    </div>
+                </div>
+
+                <!-- Pharmacy Department -->
+                <div class="department-card" onclick="openDepartmentModal('pharmacy')">
+                    <div class="department-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <h3>Pharmacy</h3>
+                    <p>Medication management and prescriptions</p>
+                    <div class="department-stats">
+                        <span><i class="fas fa-user-md"></i> 5 Pharmacists</span>
+                        <span><i class="fas fa-capsules"></i> 5000+ Drugs</span>
+                    </div>
+                </div>
+
+                <!-- Radiology Department -->
+                <div class="department-card" onclick="openDepartmentModal('radiology')">
+                    <div class="department-icon">
+                        <i class="fas fa-x-ray"></i>
+                    </div>
+                    <h3>Radiology</h3>
+                    <p>Advanced diagnostic imaging services</p>
+                    <div class="department-stats">
+                        <span><i class="fas fa-user-md"></i> 4 Specialists</span>
+                        <span><i class="fas fa-image"></i> 6 Machines</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Facilities Section -->
+    <section class="section" id="facilities">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Facilities</h2>
+                <p>State-of-the-art medical facilities equipped with the latest technology</p>
+            </div>
+            
+            <div class="facilities-container">
+                <!-- Facilities will be loaded via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Medical Staff Section -->
+    <section class="section" id="staff">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Medical Staff</h2>
+                <p>Meet our team of dedicated healthcare professionals</p>
+            </div>
+            
+            <div class="staff-container">
+                <!-- Staff will be loaded via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Patient Testimonials</h2>
+                <p>What our patients say about their experience</p>
+            </div>
+            
+            <div class="testimonials-container">
+                <!-- Testimonials will be loaded via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+                <p>Get in touch with Emma-Health Center</p>
+            </div>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4>Address</h4>
+                            <p>No 20,Akobo express street</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>(234)7015693672 (Main)<br>(234)7015693672 (Emergency)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4>Email</h4>
+                            <p>info@emmahealth.center<br>appointments@emmahealth.center</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4>Hours</h4>
+                            <p>24/7 Emergency Department<br>Mon-Fri: 8am-8pm<br>Sat: 9am-5pm<br>Sun: 10am-4pm</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Send us a Message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Your Message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Department Modal -->
+    <div class="modal department-modal" id="departmentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="deptModalTitle">Department Details</h2>
+                <button class="close-modal" id="closeDeptModal">&times;</button>
+            </div>
+            <div class="modal-body" id="deptModalBody">
+                <!-- Department details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>Emma-Health Center</h3>
+                    <p>Providing exceptional healthcare services with cutting-edge technology and a compassionate touch.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#departments">Departments</a></li>
+                        <li><a href="#staff">Medical Staff</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Departments</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="openDepartmentModal('cardiology')">Cardiology</a></li>
+                        <li><a href="#" onclick="openDepartmentModal('neurology')">Neurology</a></li>
+                        <li><a href="#" onclick="openDepartmentModal('pediatrics')">Pediatrics</a></li>
+                        <li><a href="#" onclick="openDepartmentModal('emergency')">Emergency</a></li>
+                        <li><a href="#" onclick="openDepartmentModal('pharmacy')">Pharmacy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i>Emm-Tech Smart Solution</li>
+                        <li><i class="fas fa-phone"></i> (234)7015693672</li>
+                        <li><i class="fas fa-envelope"></i> ayodejiayoola400@gmail.com</li>
+                        <li><i class="fas fa-clock"></i> 24/7 Emergency Services</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>2026 Emma-Health Center. All rights reserved. | HIPAA Compliant | Protected by Advanced Security Protocols</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="js/config.js"></script>
+    <script src="js/main.js "></script>
+    <script src="js/department.js"></script>
+</body>
+</html>

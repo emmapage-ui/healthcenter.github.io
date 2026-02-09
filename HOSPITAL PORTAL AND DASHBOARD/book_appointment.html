@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment | Emma-Health Center</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/appointment.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-hospital logo-icon"></i>
+                <div class="logo-text">EMMA<span>-HEALTH</span></div>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#departments">Departments</a></li>
+                <li><a href="index.html#staff">Doctors</a></li>
+                <li><a href="book_appointment.html" class="active">Book Appointment</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="patient_login.html" class="btn btn-outline">Patient Login</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Appointment Hero -->
+    <section class="appointment-hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Book Your Medical Appointment</h1>
+                <p>Schedule your visit with our expert medical professionals. Choose from multiple appointment types and convenient time slots.</p>
+                <div class="appointment-stats">
+                    <div class="stat">
+                        <i class="fas fa-user-md"></i>
+                        <div>
+                            <span class="stat-value">48+</span>
+                            <span class="stat-label">Specialist Doctors</span>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <span class="stat-value">24/7</span>
+                            <span class="stat-label">Emergency Care</span>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-calendar-check"></i>
+                        <div>
+                            <span class="stat-value">15 Min</span>
+                            <span class="stat-label">Average Wait Time</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appointment Booking Section -->
+    <section class="appointment-section">
+        <div class="container">
+            <div class="appointment-container">
+                <!-- Left Panel: Booking Steps -->
+                <div class="booking-steps">
+                    <div class="step-indicator">
+                        <div class="step active" data-step="1">
+                            <div class="step-number">1</div>
+                            <div class="step-info">
+                                <div class="step-title">Select Service</div>
+                                <div class="step-desc">Choose department & doctor</div>
+                            </div>
+                        </div>
+                        <div class="step" data-step="2">
+                            <div class="step-number">2</div>
+                            <div class="step-info">
+                                <div class="step-title">Pick Date & Time</div>
+                                <div class="step-desc">Choose appointment slot</div>
+                            </div>
+                        </div>
+                        <div class="step" data-step="3">
+                            <div class="step-number">3</div>
+                            <div class="step-info">
+                                <div class="step-title">Patient Details</div>
+                                <div class="step-desc">Enter your information</div>
+                            </div>
+                        </div>
+                        <div class="step" data-step="4">
+                            <div class="step-number">4</div>
+                            <div class="step-info">
+                                <div class="step-title">Confirmation</div>
+                                <div class="step-desc">Review & book</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 1: Select Service -->
+                    <div class="step-content active" id="step1">
+                        <h3>Select Medical Service</h3>
+                        <p>Choose the department and doctor for your appointment</p>
+                        
+                        <div class="service-selection">
+                            <div class="form-group">
+                                <label for="appointmentType">Appointment Type</label>
+                                <div class="type-options">
+                                    <div class="type-option active" data-type="consultation">
+                                        <i class="fas fa-stethoscope"></i>
+                                        <span>Consultation</span>
+                                    </div>
+                                    <div class="type-option" data-type="followup">
+                                        <i class="fas fa-redo"></i>
+                                        <span>Follow-up</span>
+                                    </div>
+                                    <div class="type-option" data-type="emergency">
+                                        <i class="fas fa-ambulance"></i>
+                                        <span>Emergency</span>
+                                    </div>
+                                    <div class="type-option" data-type="checkup">
+                                        <i class="fas fa-heartbeat"></i>
+                                        <span>Check-up</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="department">Select Department</label>
+                                <select id="department" class="form-control" onchange="loadDoctors()">
+                                    <option value="">Choose Department</option>
+                                    <option value="cardiology">Cardiology</option>
+                                    <option value="neurology">Neurology</option>
+                                    <option value="pediatrics">Pediatrics</option>
+                                    <option value="orthopedics">Orthopedics</option>
+                                    <option value="dermatology">Dermatology</option>
+                                    <option value="emergency">Emergency</option>
+                                    <option value="general">General Medicine</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="doctor">Select Doctor</label>
+                                <select id="doctor" class="form-control" onchange="loadDoctorSchedule()">
+                                    <option value="">Choose Doctor</option>
+                                    <!-- Doctors will be loaded dynamically -->
+                                </select>
+                            </div>
+
+                            <div class="doctor-info" id="doctorInfo">
+                                <!-- Doctor information will be displayed here -->
+                            </div>
+                        </div>
+
+                        <div class="step-actions">
+                            <button class="btn btn-primary" onclick="nextStep(2)">
+                                Next: Select Time <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Select Date & Time -->
+                    <div class="step-content" id="step2">
+                        <h3>Select Date & Time</h3>
+                        <p>Choose a convenient time slot for your appointment</p>
+                        
+                        <div class="datetime-selection">
+                            <div class="calendar-section">
+                                <div class="calendar-header">
+                                    <button class="btn-calendar-nav" onclick="prevMonth()">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <h4 id="currentMonth">November 2023</h4>
+                                    <button class="btn-calendar-nav" onclick="nextMonth()">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                <div class="calendar" id="calendar">
+                                    <!-- Calendar will be generated by JavaScript -->
+                                </div>
+                            </div>
+
+                            <div class="timeslot-section">
+                                <h4>Available Time Slots</h4>
+                                <div class="timeslot-info">
+                                    <div class="date-display" id="selectedDateDisplay">
+                                        Select a date
+                                    </div>
+                                    <div class="slot-legend">
+                                        <span class="available"><i class="fas fa-circle"></i> Available</span>
+                                        <span class="booked"><i class="fas fa-circle"></i> Booked</span>
+                                        <span class="emergency"><i class="fas fa-circle"></i> Emergency Only</span>
+                                    </div>
+                                </div>
+                                <div class="timeslots" id="timeslots">
+                                    <!-- Time slots will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-actions">
+                            <button class="btn btn-outline" onclick="prevStep(1)">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <button class="btn btn-primary" onclick="nextStep(3)">
+                                Next: Patient Details <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Patient Details -->
+                    <div class="step-content" id="step3">
+                        <h3>Patient Information</h3>
+                        <p>Please provide your details for the appointment</p>
+                        
+                        <div class="patient-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName">First Name *</label>
+                                    <input type="text" id="firstName" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Last Name *</label>
+                                    <input type="text" id="lastName" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Email Address *</label>
+                                    <input type="email" id="email" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number *</label>
+                                    <input type="tel" id="phone" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dob">Date of Birth</label>
+                                <input type="date" id="dob" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <select id="gender" class="form-control">
+                                    <option value="">Select</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                    <option value="prefer-not">Prefer not to say</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="symptoms">Symptoms / Reason for Visit</label>
+                                <textarea id="symptoms" class="form-control" rows="3" placeholder="Describe your symptoms or reason for appointment"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox">
+                                    <input type="checkbox" id="insuranceCheck">
+                                    <span>I have medical insurance</span>
+                                </label>
+                            </div>
+
+                            <div class="insurance-details" id="insuranceDetails" style="display: none;">
+                                <h4>Insurance Information</h4>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="insuranceProvider">Insurance Provider</label>
+                                        <input type="text" id="insuranceProvider" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="policyNumber">Policy Number</label>
+                                        <input type="text" id="policyNumber" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-actions">
+                            <button class="btn btn-outline" onclick="prevStep(2)">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <button class="btn btn-primary" onclick="nextStep(4)">
+                                Next: Confirmation <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Confirmation -->
+                    <div class="step-content" id="step4">
+                        <h3>Confirm Your Appointment</h3>
+                        <p>Please review your appointment details before booking</p>
+                        
+                        <div class="appointment-summary">
+                            <div class="summary-card">
+                                <h4>Appointment Details</h4>
+                                <div class="summary-item">
+                                    <span class="summary-label">Type:</span>
+                                    <span class="summary-value" id="summaryType">Consultation</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Department:</span>
+                                    <span class="summary-value" id="summaryDepartment">Cardiology</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Doctor:</span>
+                                    <span class="summary-value" id="summaryDoctor">Dr. Michael Chen</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Date & Time:</span>
+                                    <span class="summary-value" id="summaryDateTime">Nov 15, 2023 at 10:30 AM</span>
+                                </div>
+                            </div>
+
+                            <div class="summary-card">
+                                <h4>Patient Information</h4>
+                                <div class="summary-item">
+                                    <span class="summary-label">Name:</span>
+                                    <span class="summary-value" id="summaryName">John Doe</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Contact:</span>
+                                    <span class="summary-value" id="summaryContact">john@example.com | (555) 123-4567</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Reason:</span>
+                                    <span class="summary-value" id="summaryReason">Chest pain and shortness of breath</span>
+                                </div>
+                            </div>
+
+                            <div class="summary-card">
+                                <h4>Payment Information</h4>
+                                <div class="summary-item">
+                                    <span class="summary-label">Consultation Fee:</span>
+                                    <span class="summary-value">$150</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Insurance:</span>
+                                    <span class="summary-value" id="summaryInsurance">Not provided</span>
+                                </div>
+                                <div class="summary-item total">
+                                    <span class="summary-label">Total Amount:</span>
+                                    <span class="summary-value">$150</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="terms-agreement">
+                            <label class="checkbox">
+                                <input type="checkbox" id="termsAgreement" required>
+                                <span>I agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>. I understand that cancellation requires 24 hours notice.</span>
+                            </label>
+                        </div>
+
+                        <div class="step-actions">
+                            <button class="btn btn-outline" onclick="prevStep(3)">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <button class="btn btn-primary" id="confirmBookingBtn">
+                                <i class="fas fa-calendar-check"></i> Confirm & Book Appointment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel: Appointment Summary -->
+                <div class="appointment-sidebar">
+                    <div class="sidebar-card">
+                        <h3>Appointment Summary</h3>
+                        <div class="sidebar-summary">
+                            <div class="summary-line">
+                                <span>Service:</span>
+                                <span id="sidebarService">Not selected</span>
+                            </div>
+                            <div class="summary-line">
+                                <span>Doctor:</span>
+                                <span id="sidebarDoctor">Not selected</span>
+                            </div>
+                            <div class="summary-line">
+                                <span>Date & Time:</span>
+                                <span id="sidebarDateTime">Not selected</span>
+                            </div>
+                            <div class="summary-line total">
+                                <span>Estimated Cost:</span>
+                                <span id="sidebarCost">$0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-card">
+                        <h3>Need Help?</h3>
+                        <div class="help-options">
+                            <div class="help-option">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <h4>Call Us</h4>
+                                    <p>(555) 123-4567</p>
+                                </div>
+                            </div>
+                            <div class="help-option">
+                                <i class="fas fa-comment-medical"></i>
+                                <div>
+                                    <h4>Live Chat</h4>
+                                    <p>Available 24/7</p>
+                                </div>
+                            </div>
+                            <div class="help-option">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <h4>Email</h4>
+                                    <p>appointments@emmahealth.center</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-card">
+                        <h3>Why Choose Emma-Health?</h3>
+                        <ul class="benefits-list">
+                            <li><i class="fas fa-check-circle"></i> Board-certified specialists</li>
+                            <li><i class="fas fa-check-circle"></i> Same-day appointments available</li>
+                            <li><i class="fas fa-check-circle"></i> Telemedicine options</li>
+                            <li><i class="fas fa-check-circle"></i> Electronic health records</li>
+                            <li><i class="fas fa-check-circle"></i> Insurance accepted</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-card emergency-card">
+                        <div class="emergency-header">
+                            <i class="fas fa-ambulance"></i>
+                            <h3>Emergency?</h3>
+                        </div>
+                        <p>For life-threatening emergencies, call 911 or visit our emergency department immediately.</p>
+                        <button class="btn btn-danger">
+                            <i class="fas fa-phone"></i> Emergency: (555) 987-6543
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appointment Types Section -->
+    <section class="appointment-types">
+        <div class="container">
+            <div class="section-title">
+                <h2>Multiple Ways to See a Doctor</h2>
+                <p>Choose the appointment type that works best for you</p>
+            </div>
+            
+            <div class="types-grid">
+                <div class="type-card">
+                    <div class="type-icon">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <h3>In-Person Visit</h3>
+                    <p>Traditional office visit with physical examination</p>
+                    <ul>
+                        <li>Complete physical exam</li>
+                        <li>Diagnostic tests available</li>
+                        <li>Immediate treatment</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="selectAppointmentType('in-person')">
+                        Book In-Person
+                    </button>
+                </div>
+
+                <div class="type-card">
+                    <div class="type-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Video Consultation</h3>
+                    <p>Virtual visit from the comfort of your home</p>
+                    <ul>
+                        <li>No travel required</li>
+                        <li>Same-day appointments</li>
+                        <li>Prescription delivery</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="selectAppointmentType('video')">
+                        Book Video Visit
+                    </button>
+                </div>
+
+                <div class="type-card">
+                    <div class="type-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3>Phone Consultation</h3>
+                    <p>Speak with a doctor over the phone</p>
+                    <ul>
+                        <li>Quick medical advice</li>
+                        <li>Prescription refills</li>
+                        <li>Follow-up discussions</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="selectAppointmentType('phone')">
+                        Book Phone Call
+                    </button>
+                </div>
+
+                <div class="type-card">
+                    <div class="type-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>Home Visit</h3>
+                    <p>Doctor comes to your home (limited availability)</p>
+                    <ul>
+                        <li>For mobility-challenged patients</li>
+                        <li>Comprehensive home assessment</li>
+                        <li>All equipment brought to you</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="selectAppointmentType('home')">
+                        Request Home Visit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p>Common questions about appointments at Emma-Health</p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>How do I cancel or reschedule my appointment?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can cancel or reschedule your appointment by calling our scheduling department at (555) 123-4567 or through your patient portal account. We require at least 24 hours notice for cancellations to avoid a late cancellation fee.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>What should I bring to my appointment?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Please bring your photo ID, insurance card, list of current medications, and any relevant medical records. For new patients, arrive 15 minutes early to complete registration forms.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>Do you accept walk-in appointments?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we accept walk-in appointments based on availability. However, scheduled appointments are given priority. For the shortest wait time, we recommend booking in advance.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h4>How much does a consultation cost?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Consultation fees vary by department and doctor. General consultations start at $150. We accept most major insurance plans and offer payment plans for self-pay patients.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>Emma-Health Center</h3>
+                    <p>Providing exceptional healthcare services with cutting-edge technology and a compassionate touch.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="index.html#departments">Departments</a></li>
+                        <li><a href="index.html#staff">Medical Staff</a></li>
+                        <li><a href="book_appointment.html">Book Appointment</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Appointments</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="selectAppointmentType('in-person')">In-Person Visit</a></li>
+                        <li><a href="#" onclick="selectAppointmentType('video')">Video Consultation</a></li>
+                        <li><a href="#" onclick="selectAppointmentType('phone')">Phone Consultation</a></li>
+                        <li><a href="#" onclick="selectAppointmentType('home')">Home Visit</a></li>
+                        <li><a href="emergency.html">Emergency Care</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Medical Plaza, Springfield</li>
+                        <li><i class="fas fa-phone"></i> (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> appointments@emmahealth.center</li>
+                        <li><i class="fas fa-clock"></i> Mon-Fri: 8am-8pm | Sat: 9am-5pm</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Emma-Health Center. All rights reserved. | HIPAA Compliant | Protected by Advanced Security Protocols</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-header success">
+                <h2><i class="fas fa-check-circle"></i> Appointment Booked Successfully!</h2>
+                <button class="close-modal" onclick="closeSuccessModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="success-content">
+                    <div class="success-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Your appointment has been confirmed</h3>
+                    <p id="appointmentDetails">Details will appear here</p>
+                    
+                    <div class="appointment-ticket">
+                        <div class="ticket-header">
+                            <h4>Appointment Ticket</h4>
+                            <span class="ticket-id">ID: APT-20231115-001</span>
+                        </div>
+                        <div class="ticket-body">
+                            <div class="ticket-row">
+                                <span>Date & Time:</span>
+                                <strong id="ticketDateTime">Nov 15, 2023 at 10:30 AM</strong>
+                            </div>
+                            <div class="ticket-row">
+                                <span>Doctor:</span>
+                                <strong id="ticketDoctor">Dr. Michael Chen</strong>
+                            </div>
+                            <div class="ticket-row">
+                                <span>Department:</span>
+                                <strong id="ticketDepartment">Cardiology</strong>
+                            </div>
+                            <div class="ticket-row">
+                                <span>Location:</span>
+                                <strong>Level 3, Cardiology Wing</strong>
+                            </div>
+                        </div>
+                        <div class="ticket-footer">
+                            <div class="qr-code">
+                                <!-- QR code would be generated here -->
+                                <div class="qr-placeholder">QR Code</div>
+                            </div>
+                            <div class="ticket-actions">
+                                <button class="btn btn-outline" onclick="printTicket()">
+                                    <i class="fas fa-print"></i> Print Ticket
+                                </button>
+                                <button class="btn btn-primary" onclick="addToCalendar()">
+                                    <i class="fas fa-calendar-plus"></i> Add to Calendar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="next-steps">
+                        <h4>Next Steps:</h4>
+                        <ol>
+                            <li>You will receive a confirmation email with appointment details</li>
+                            <li>Arrive 15 minutes before your scheduled time</li>
+                            <li>Bring your ID and insurance card (if applicable)</li>
+                            <li>Complete any pre-appointment forms online</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="closeSuccessModal()">
+                    <i class="fas fa-home"></i> Return to Homepage
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="js/appointment.js"></script>
+    <script>
+        // Initialize appointment booking system
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeAppointmentSystem();
+            
+            // Set current date in calendar
+            const currentDate = new Date();
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+            document.getElementById('currentMonth').textContent = 
+                `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+            
+            // Generate calendar
+            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+            
+            // Load sample doctors
+            loadDoctors();
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Setup FAQ toggle
+            setupFAQ();
+        });
+        
+        function setupEventListeners() {
+            // Appointment type selection
+            document.querySelectorAll('.type-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.type-option').forEach(opt => {
+                        opt.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    updateAppointmentSummary();
+                });
+            });
+            
+            // Step navigation
+            document.querySelectorAll('.step').forEach(step => {
+                step.addEventListener('click', function() {
+                    const stepNumber = parseInt(this.getAttribute('data-step'));
+                    goToStep(stepNumber);
+                });
+            });
+            
+            // Insurance checkbox
+            document.getElementById('insuranceCheck').addEventListener('change', function() {
+                const insuranceDetails = document.getElementById('insuranceDetails');
+                insuranceDetails.style.display = this.checked ? 'block' : 'none';
+            });
+            
+            // Form validation on input
+            document.querySelectorAll('#step3 input, #step3 select, #step3 textarea').forEach(input => {
+                input.addEventListener('input', updateAppointmentSummary);
+            });
+            
+            // Confirm booking button
+            document.getElementById('confirmBookingBtn').addEventListener('click', confirmBooking);
+        }
+        
+        function setupFAQ() {
+            document.querySelectorAll('.faq-question').forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    const icon = this.querySelector('i');
+                    
+                    // Toggle active class
+                    this.parentElement.classList.toggle('active');
+                    
+                    // Toggle icon
+                    if (this.parentElement.classList.contains('active')) {
+                        icon.className = 'fas fa-chevron-up';
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                    } else {
+                        icon.className = 'fas fa-chevron-down';
+                        answer.style.maxHeight = '0';
+                    }
+                });
+            });
+        }
+        
+        function selectAppointmentType(type) {
+            // Scroll to booking section
+            document.querySelector('.booking-steps').scrollIntoView({ behavior: 'smooth' });
+            
+            // Set appointment type
+            let typeElement;
+            switch(type) {
+                case 'in-person':
+                    typeElement = document.querySelector('[data-type="consultation"]');
+                    break;
+                case 'video':
+                    typeElement = document.querySelector('[data-type="followup"]');
+                    break;
+                case 'phone':
+                    typeElement = document.querySelector('[data-type="checkup"]');
+                    break;
+                case 'home':
+                    typeElement = document.querySelector('[data-type="emergency"]');
+                    break;
+            }
+            
+            if (typeElement) {
+                document.querySelectorAll('.type-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                typeElement.classList.add('active');
+            }
+            
+            // Go to step 1
+            goToStep(1);
+        }
+        
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.remove('active');
+            // Reset form and go to step 1
+            resetForm();
+            goToStep(1);
+        }
+        
+        function resetForm() {
+            // Reset all form fields
+            document.querySelectorAll('input, select, textarea').forEach(field => {
+                if (field.type !== 'button' && field.type !== 'submit') {
+                    field.value = '';
+                }
+            });
+            
+            // Reset appointment type
+            document.querySelectorAll('.type-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            document.querySelector('[data-type="consultation"]').classList.add('active');
+            
+            // Reset insurance details
+            document.getElementById('insuranceDetails').style.display = 'none';
+            document.getElementById('insuranceCheck').checked = false;
+            
+            // Reset summary
+            updateAppointmentSummary();
+        }
+        
+        function printTicket() {
+            alert('Printing appointment ticket...');
+            // In a real app, this would open print dialog
+        }
+        
+        function addToCalendar() {
+            alert('Adding appointment to your calendar...');
+            // In a real app, this would download .ics file
+        }
+    </script>
+</body>
+</html>
